@@ -1,13 +1,13 @@
 {
   "dependencies": {
     "bcryptjs": "^2.4.3",
-    "express-validator": "^7.2.0"
+    "express-validator": "^7.2.0",
+    "pg": "^8.13.1"
   },
   "name": "authenticate-me",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "install": "npm --prefix backend install backend",
