@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "aws-sdk": "^2.1692.0",
     "bcryptjs": "^2.4.3",
     "express-validator": "^7.2.0",
     "pg": "^8.13.1"
@@ -18,7 +19,7 @@
     "sequelize-cli": "npm run --prefix backend sequelize-cli",
     "start": "npm start --prefix backend"
   },
-  "keywords": []  ,
+  "keywords": [],
   "author": "",
   "license": "ISC"
 }
