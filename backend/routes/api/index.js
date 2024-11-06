@@ -1,10 +1,13 @@
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
+const videosRouter = require('./videos.js')
 
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
+
+router.use('/videos', videosRouter)
 
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });

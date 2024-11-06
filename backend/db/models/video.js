@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
     userId: {type: DataTypes.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users',
+          model: 'Users', //match the table name: Users
           key: 'id'
         }
 
@@ -31,8 +31,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     description: {type: DataTypes.TEXT,
       allowNull: false
-
+      
     },
+    videoUrl: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
 
   }, {
     sequelize,
