@@ -61,7 +61,7 @@ async (req, res) => {
 
 //fetch all videos
 router.get('/',  async (req, res) => {
-    const Videos = Video.findAll()
+    const Videos = await Video.findAll()
     res.json({
         Videos
     })
