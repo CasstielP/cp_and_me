@@ -11,7 +11,10 @@ const router = express.Router();
 
 
 //Multer configuration for temporary storage
-const upload = multer({sotrage: multer.memoryStorage()});
+const   upload = multer({
+    sotrage: multer.memoryStorage(),
+    limits: { fileSize: 10000 * 1024 * 1024 }   
+});
 
 const validateUploadVideo = [
     check('title')
@@ -23,13 +26,13 @@ const validateUploadVideo = [
 ]
 
 router.post('/upload', upload.single('video'), 
-validateUploadVideo,
+// validateUploadVideo,
 async (req, res) => {
+    console.log('============got here ===================')
     try{
         const {title, description, userId} = req.body;
-        
         const file = req.file
-
+        
         const params = {
             Bucket: process.env.AWS_BUCKET_NAME,
             Key: `videos/${Date.now()}-${file.originalname}`, // Unique file name with timestamp
@@ -63,7 +66,7 @@ async (req, res) => {
 router.get('/',  async (req, res) => {
     const Videos = await Video.findAll()
     res.json({
-        Videos
+     Videos
     })
 })
 //display user videos
@@ -71,3 +74,4 @@ router.get('/',  async (req, res) => {
 
 
 module.exports = router
+// module.exports = upload

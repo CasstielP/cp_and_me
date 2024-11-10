@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import {useSelector} from 'react-redux'
 import { useDispatch } from "react-redux";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
+import { csrfFetch } from "../../store/csrf";
 
 
-
-const UploadVdeo = () => {
+const UploadVideo = () => {
 
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
-    const [video, setVideo] = useState()
+    const [video, setVideo] = useState(null)
     const user = useSelector((state)=> state.session.user)
+    const history = useHistory()
     
+    if (!user) return <Redirect to="/" />;
+
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -20,17 +23,18 @@ const UploadVdeo = () => {
         formData.append('title', title)
         formData.append('description', description)
         formData.append('userId', user.id)
-
-        await fetch('/api/videos/upload', {
+        
+        await csrfFetch('/api/videos/upload', {
             method: 'POST',
-            headers: {
-                'X-CSRF-Token': 'EpY19HOg-BBHRXw2buxmHbfiu0zkNBtJxwjM'
-            },
-            body: formData,
-            credentials: 'include'
-        })
+                body: formData,
+                credentials: 'include'
+            })
         .then(response => response.json())
-        .then(data => console.log('Success:', data))
+        .then(data =>{
+            console.log('Success:', data)
+            window.alert('success!')
+            history.push('/')
+        })
         .catch(error => console.error('Error:', error));
     }
 
@@ -38,6 +42,9 @@ const UploadVdeo = () => {
         const file = e.target.files[0]
         setVideo(file)
     }
+
+
+
     return (
         <>
         <form onSubmit={handleSubmit}>
@@ -53,6 +60,7 @@ const UploadVdeo = () => {
              onChange={(e)=> setDescription(e.target.value)}>
             </input>
             <input
+                id="video-file-tag"
                 type='file' onChange={updateVideo}
             >
             </input>
@@ -62,4 +70,4 @@ const UploadVdeo = () => {
     )
 }
 
-export default UploadVdeo
+export default UploadVideo;

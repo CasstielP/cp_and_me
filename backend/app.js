@@ -2,18 +2,27 @@ const express = require("express");
 require("express-async-errors");
 const morgan = require("morgan");
 const cors = require("cors");
-const csurf = require("csurf");
 const helmet = require("helmet");
 const cookieParser = require("cookie-parser");
+const csurf = require("csurf");
 const { ValidationError } = require("sequelize");
 const { environment } = require("./config");
 const isProduction = environment === "production";
+const multer = require('multer')
+
+const upload = multer({
+  sotrage: multer.memoryStorage(),
+  limits: { fileSize: 10000 * 1024 * 1024 }   
+});
 
 const app = express();
 
 app.use(morgan("dev"));
+// app.use('/api/videos/upload', upload.single('video'))
 
 app.use(cookieParser());
+
+
 app.use(express.json());
 
 // Security Middleware
@@ -41,6 +50,7 @@ app.use(
 );
 
 const routes = require("./routes");
+
 app.use(routes);
 
 //resource not found error handler
@@ -77,3 +87,4 @@ app.use((err, _req, res, _next) => {
 });
 
 module.exports = app;
+// module.exports = upload;
