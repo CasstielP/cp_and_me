@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
     videoUrl: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    thumbnailUrl: {
+      type: DataTypes.STRING,
+      defaultValue: 'https://cp-and-me.s3.us-west-1.amazonaws.com/images/Screenshot+2024-11-12+at+9.16.22%E2%80%AFAM.png'
     }
 
   }, {

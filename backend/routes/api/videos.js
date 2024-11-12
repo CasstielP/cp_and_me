@@ -28,7 +28,6 @@ const validateUploadVideo = [
 router.post('/upload', upload.single('video'), 
 // validateUploadVideo,
 async (req, res) => {
-    console.log('============got here ===================')
     try{
         const {title, description, userId} = req.body;
         const file = req.file
