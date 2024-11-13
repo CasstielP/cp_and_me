@@ -8,8 +8,8 @@ import VideoThumbnailSelector from "../thumbNailSelector";
 
 const UploadVideo = () => {
 
-    const [title, setTitle] = useState()
-    const [description, setDescription] = useState()
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     const [video, setVideo] = useState(null)
     const [thumbnail, setThumbnail] = useState(null)
     const user = useSelector((state)=> state.session.user)
