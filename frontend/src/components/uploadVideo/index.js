@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux'
 import { useDispatch } from "react-redux";
 import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
+import VideoThumbnailSelector from "../thumbNailSelector";
 
 
 const UploadVideo = () => {
@@ -10,6 +11,7 @@ const UploadVideo = () => {
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
     const [video, setVideo] = useState(null)
+    const [thumbnail, setThumbnail] = useState(null)
     const user = useSelector((state)=> state.session.user)
     const history = useHistory()
     
@@ -22,7 +24,8 @@ const UploadVideo = () => {
         formData.append('video', video)
         formData.append('title', title)
         formData.append('description', description)
-        formData.append('userId', user.id)
+        // formData.append('thumbnail', thumbnail)
+        formData.append('userId', user.id)  
         
         await csrfFetch('/api/videos/upload', {
             method: 'POST',
@@ -41,6 +44,7 @@ const UploadVideo = () => {
     const updateVideo = (e) => {
         const file = e.target.files[0]
         setVideo(file)
+        
     }
 
 
@@ -64,7 +68,8 @@ const UploadVideo = () => {
                 type='file' onChange={updateVideo}
             >
             </input>
-            <button type="submit"></button>
+            <VideoThumbnailSelector videoFile={video} onThumbnailSelect={setThumbnail}/>
+            <button type="submit">upload</button> 
         </form>
         </>
     )
