@@ -12,7 +12,7 @@ const router = express.Router();
 
 //Multer configuration for temporary storage
 const   upload = multer({
-    sotrage: multer.memoryStorage(),
+    storage: multer.memoryStorage(),
     limits: { fileSize: 10000 * 1024 * 1024 }   
 });
 
@@ -26,7 +26,7 @@ const validateUploadVideo = [
 ]
 
 router.post('/upload', upload.single('video'), 
-// validateUploadVideo,
+validateUploadVideo,
 async (req, res) => {
     try{
         const {title, description, userId} = req.body;

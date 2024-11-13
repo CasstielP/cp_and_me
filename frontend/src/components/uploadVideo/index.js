@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-import {useSelector} from 'react-redux'
-import { useDispatch } from "react-redux";
+import {useDispatch,useSelector} from 'react-redux'
 import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { csrfFetch } from "../../store/csrf";
 import VideoThumbnailSelector from "../thumbNailSelector";
-
+import * as videoActions from '../../store/video'
 
 const UploadVideo = () => {
-
+    
+    const dispatch = useDispatch()
+    const allVideos = useSelector(state => state.video.allVideos)
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [video, setVideo] = useState(null)
@@ -15,8 +16,13 @@ const UploadVideo = () => {
     const user = useSelector((state)=> state.session.user)
     const history = useHistory()
     
+    
+    
+    useEffect(()=> {
+        dispatch(videoActions.fetchAllVideos())
+    },[])
+    
     if (!user) return <Redirect to="/" />;
-
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -76,3 +82,4 @@ const UploadVideo = () => {
 }
 
 export default UploadVideo;
+
